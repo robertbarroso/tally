@@ -1,16 +1,65 @@
-# React + Vite
+# Tally
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=20232A)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)](https://vite.dev/)
+[![PGlite](https://img.shields.io/badge/Database-PGlite-336791?logo=postgresql&logoColor=white)](https://pglite.dev/)
 
-Currently, two official plugins are available:
+Tally is a streamer-focused scenario builder. It lets a streamer create structured random-event experiences that can later be used during a live stream, such as a Minecraft event deck.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Core idea
 
-## React Compiler
+The application organizes content into a simple hierarchy:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```text
+Menu
+└── Scenario
+		└── Branch
+				└── Option
+```
 
-## Expanding the ESLint configuration
+- A **menu** is the main collection from which the streamer selects a scenario.
+- A **scenario** is a complete event set, such as `Random Events`.
+- A **branch** is an event that can be selected within a scenario.
+- An **option** is a further choice connected to a branch.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Branches do not require options. A branch without options can be a terminal event selected directly by the first randomizer. A branch with options can lead to another selection step.
+
+## Current state
+
+The database schema and initialization flow are in place for menus, scenarios, branches, and options. The randomizer itself is planned but is not implemented yet.
+
+Data is stored locally in the browser using [PGlite](https://pglite.dev/), with a PostgreSQL-compatible schema.
+
+## Getting started
+
+```bash
+npm install
+npm run dev
+```
+
+Useful project commands:
+
+```bash
+npm run build
+npm run lint
+```
+
+## Project structure
+
+```text
+db/
+	functions/       Database access functions
+	schema/          Menu and scenario schema
+src/
+	components/      Reusable React components
+	services/        Client-side services and validation
+	App.jsx          Main application view
+```
+
+## Roadmap
+
+- Build the menu and scenario selection experience.
+- Add scenario, branch, and option creation workflows.
+- Implement random branch selection.
+- Continue selection through branch options when they exist.
+- Connect the experience to streamer-facing live controls.
