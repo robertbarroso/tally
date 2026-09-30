@@ -1,6 +1,6 @@
 BEGIN;
 
-CREATE TABLE IF NOT EXISTS container (
+CREATE TABLE IF NOT EXISTS menu (
 	id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	key VARCHAR(100) NOT NULL UNIQUE,
 	name VARCHAR(255) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS container (
 
 CREATE TABLE IF NOT EXISTS scenario (
 	id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-	container_id BIGINT NOT NULL REFERENCES container (id) ON DELETE CASCADE,
+	menu_id BIGINT NOT NULL REFERENCES menu (id) ON DELETE CASCADE,
 	key VARCHAR(100) NOT NULL,
 	name VARCHAR(255) NOT NULL,
 	display_order INTEGER NOT NULL DEFAULT 0,
@@ -19,8 +19,8 @@ CREATE TABLE IF NOT EXISTS scenario (
 	created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-	CONSTRAINT scenario_container_key_unique UNIQUE (container_id, key),
-	CONSTRAINT scenario_container_name_unique UNIQUE (container_id, name)
+	CONSTRAINT scenario_menu_key_unique UNIQUE (menu_id, key),
+	CONSTRAINT scenario_menu_name_unique UNIQUE (menu_id, name)
 );
 
 CREATE TABLE IF NOT EXISTS branch (
