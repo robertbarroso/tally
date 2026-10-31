@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import tally_db from "./tally_db.js";
+import tally_menu_routes from "./routes/tally_menu.js";
 
 /*
 Create express server to run for program.
@@ -13,6 +14,8 @@ const PORT = 8255;
 
 tally_server.use(cors());
 tally_server.use(express.json());
+
+tally_server.use("/api/menu", tally_menu_routes);
 
 /*
 Initialize all tables
